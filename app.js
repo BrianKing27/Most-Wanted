@@ -95,17 +95,15 @@ function searchByName(people) {
 //unfinished function to search through an array of people to find matching eye colors. Use searchByName as reference.
 function searchByEyeColor(people) {}
 
+// Pair programming effort by Codie Fadness and Brian King
+
 // 1. prompt the user.
 // 2. Ask user for a trait. (weight, height, eye color)
 // 3. parse data to seperate that trait from each object.
 // 4. Ask user the specific trait details. (weight in lbs, height in inches)
-// 5. Parse data based on user input.
-// 6. return data matching user's input (weight:130lbs, height:75in);
-//
-//
-//
-//
-//
+// 5. return people matching user's input (weight:130lbs, height:75in);
+// 6. repeat step 2,3,4,5 until only one match appears
+// 7. return matching person
 
 //TODO: add other trait filter functions here.
 
@@ -149,8 +147,9 @@ function displayPerson(person) {
 //this function will continue to loop until the user enters something that is not an empty string("") or is considered valid based off the callback function(valid).
 function promptFor(question, valid) {
   let isValid;
+  let response;
   do {
-    let response = prompt(question).trim();
+    response = prompt(question).trim();
     isValid = valid(response);
   } while (response === "" || isValid === false);
   return response;
