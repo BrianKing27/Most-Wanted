@@ -2,7 +2,7 @@
 
 //Menu functions.
 //Used for the overall flow of the application.
-/////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////                   
 //#region
 
 // app is the function called to start the entire application
@@ -75,14 +75,14 @@ function mainMenu(person, people) {
 
 //nearly finished function used to search through an array of people to find matching first and last name and return a SINGLE person object.
 function searchByName(people) {
-  let firstName = promptFor("What is the person's first name?", autoValid);
+  let firstName = promptFor("What is the person's eye color?", autoValid);
   let lastName = promptFor("What is the person's last name?", autoValid);
 
   let foundPerson = people.filter(function (potentialMatch) {
-    if (
+    if(
       potentialMatch.firstName === firstName &&
       potentialMatch.lastName === lastName
-    ) {
+    ) {                   
       return true;
     } else {
       return false;
@@ -94,6 +94,18 @@ function searchByName(people) {
 
 //unfinished function to search through an array of people to find matching eye colors. Use searchByName as reference.
 function searchByEyeColor(people) {}
+
+// 1. prompt the user.
+// 2. Ask user for a trait. (weight, height, eye color)
+// 3. parse data to seperate that trait from each object.
+// 4. Ask user the specific trait details. (weight in lbs, height in inches)
+// 5. Parse data based on user input.
+// 6. return data matching user's input (weight:130lbs, height:75in);
+//
+//
+//
+//
+//
 
 //TODO: add other trait filter functions here.
 
