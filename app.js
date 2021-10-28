@@ -31,7 +31,7 @@ function app(people) {
 // The below traitsApp function was a pair programming effort by Brian King and Codie Fadness.
 function traitsApp(people){
   if(searchResults.length == 1){
-    return searchResults
+    mainMenu(searchResults)
   }
   else{
   let searchTrait = prompt("Do you know any of the persons traits? Enter trait here - Gender. DOB. Height. Weight. Eye color. Occupation. Case sensitive");
@@ -78,9 +78,9 @@ function mainMenu(person, people) {
 
   let displayOption = promptFor(
     "Found " +
-      person.firstName +
+      searchResults[0].firstName +
       " " +
-      person.lastName +
+      searchResults[0].lastName +
       " . Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'",
     autoValid
   );
@@ -245,6 +245,14 @@ function searchByOccupation(people) {
 // 3. save results from step 2
 // 4. reprompt until five traits have been searched for, or only a single match is found
 
+// 1. Save matched person/object.
+// 2. Prompt user.
+// 3. Ask what would they like to view.
+// 4. If info: Retrieve matched person.
+// 5. Display person's info
+// 6. if anything else: Close prompt.
+
+
 //TODO: add other trait filter functions here.
 
 //#endregion
@@ -268,8 +276,8 @@ function displayPeople(people) {
 function displayPerson(person) {
   // print all of the information about a person:
   // height, weight, age, name, occupation, eye color.
-  let personInfo = "First Name: " + person.firstName + "\n";
-  personInfo += "Last Name: " + person.lastName + "\n";
+  let personInfo = "First Name: " + searchResults[0].firstName;
+  personInfo += "Last Name: " + searchResults[0].lastName + "\n";
   // TODO: finish getting the rest of the information to display.
   alert(personInfo);
 }
