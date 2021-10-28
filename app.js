@@ -6,7 +6,8 @@
 //#region
 
 // app is the function called to start the entire application
-let searchResults;
+
+let searchResults = [];
 function app(people) {
   let searchType = promptFor(
     "Do you know the name of the person you are looking for? Enter 'yes' or 'no'",
@@ -29,31 +30,43 @@ function app(people) {
 }
 // The below traitsApp function was a pair programming effort by Brian King and Codie Fadness.
 function traitsApp(people){
+  if(searchResults.length == 1){
+    return searchResults
+  }
+  else{
   let searchTrait = prompt("Do you know any of the persons traits? Enter trait here - Gender. DOB. Height. Weight. Eye color. Occupation. Case sensitive");
   switch (searchTrait) {
     case "Gender":
       searchResults = searchByGender(people);
+      traitsApp(searchResults)
       break;
     case "DOB":
       searchResults = searchByDOB(people);
+      traitsApp(searchResults)
       break;
     case 'Height':
       searchResults = searchByHeight(people);
+      traitsApp(searchResults)
       break;
     case 'Weight':
       searchResults = searchByWeight(people);
+      traitsApp(searchResults)
       break;
     case 'Eye color':
       searchResults = searchByEyeColor(people);
+      traitsApp(searchResults)
       break;
     case 'Occupation':
       searchResults = searchByOccupation(people);
+      traitsApp(searchResults)
       break;
     default:
-      traitsApp(people); // restart app
+      
       break;
+    }
   }
 }
+
 // Menu function to call once you find who you are looking for
 function mainMenu(person, people) {
   /* Here we pass in the entire person object that we found in our search, as well as the entire original dataset of people. We need people in order to find descendants and other information that the user may want. */
@@ -170,10 +183,9 @@ function searchByDOB(people) {
 
 function searchByHeight(people) {
   let height = promptFor("What is the person's height in inches?", autoValid);
-
   let foundPerson = people.filter(function (potentialMatch) {
     if(
-      potentialMatch.height === height
+      potentialMatch.height == height
     ) {                   
       return true;
     } else {
@@ -188,7 +200,7 @@ function searchByWeight(people) {
 
   let foundPerson = people.filter(function (potentialMatch) {
     if(
-      potentialMatch.weight === weight
+      potentialMatch.weight == weight
     ) {                   
       return true;
     } else {
@@ -303,3 +315,4 @@ function autoValid(input) {
 function customValidation(input) {}
 
 //#endregion
+
