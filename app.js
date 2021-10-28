@@ -6,18 +6,18 @@
 //#region
 
 // app is the function called to start the entire application
+let searchResults;
 function app(people) {
   let searchType = promptFor(
     "Do you know the name of the person you are looking for? Enter 'yes' or 'no'",
     yesNo
   ).toLowerCase();
-  let searchResults;
   switch (searchType) {
     case "yes":
       searchResults = searchByName(people);
       break;
     case "no":
-      // TODO: search by traits
+      traitsApp(people);
       break;
     default:
       app(people); // restart app
@@ -27,7 +27,33 @@ function app(people) {
   // Call the mainMenu function ONLY after you find the SINGLE person you are looking for
   mainMenu(searchResults, people);
 }
-
+// The below traitsApp function was a pair programming effort by Brian King and Codie Fadness.
+function traitsApp(people){
+  let searchTrait = prompt("Do you know any of the persons traits? Enter trait here - Gender. DOB. Height. Weight. Eye color. Occupation. Case sensitive");
+  switch (searchTrait) {
+    case "Gender":
+      searchResults = searchByGender(people);
+      break;
+    case "DOB":
+      searchResults = searchByDOB(people);
+      break;
+    case 'Height':
+      searchResults = searchByHeight(people);
+      break;
+    case 'Weight':
+      searchResults = searchByWeight(people);
+      break;
+    case 'Eye color':
+      searchResults = searchByEyeColor(people);
+      break;
+    case 'Occupation':
+      searchResults = searchByOccupation(people);
+      break;
+    default:
+      traitsApp(people); // restart app
+      break;
+  }
+}
 // Menu function to call once you find who you are looking for
 function mainMenu(person, people) {
   /* Here we pass in the entire person object that we found in our search, as well as the entire original dataset of people. We need people in order to find descendants and other information that the user may want. */
@@ -77,6 +103,8 @@ function mainMenu(person, people) {
 
 // The below searchBy functions were a pair programming effort by Codie Fadness and Brian King
 
+
+
 function searchByName(people) {
   let firstName = promptFor("What is the person's first name?", autoValid);
   let lastName = promptFor("What is the person's last name?", autoValid);
@@ -107,6 +135,7 @@ function searchByEyeColor(people) {
       return false;
     }
   });
+  return foundPerson;
 }
 
 function searchByGender(people) {
@@ -121,6 +150,7 @@ function searchByGender(people) {
       return false;
     }
   });
+  return foundPerson;
 }
 
 function searchByDOB(people) {
@@ -135,6 +165,7 @@ function searchByDOB(people) {
       return false;
     }
   });
+  return foundPerson;
 }
 
 function searchByHeight(people) {
@@ -149,6 +180,7 @@ function searchByHeight(people) {
       return false;
     }
   });
+  return foundPerson;
 }
 
 function searchByWeight(people) {
@@ -163,6 +195,7 @@ function searchByWeight(people) {
       return false;
     }
   });
+  return foundPerson;
 }
 
 function searchByOccupation(people) {
@@ -177,10 +210,11 @@ function searchByOccupation(people) {
       return false;
     }
   });
+  return foundPerson;
 }
 
 //unfinished function to search through an array of people to find matching eye colors. Use searchByName as reference.
-function searchByEyeColor(people) {}
+
 
 // Pair programming effort by Codie Fadness and Brian King
 
