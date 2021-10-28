@@ -216,7 +216,7 @@ function searchByOccupation(people) {
 //unfinished function to search through an array of people to find matching eye colors. Use searchByName as reference.
 
 
-// Pair programming effort by Codie Fadness and Brian King
+// Pair programming effort by Codie Fadness and Brian King. User story 1
 
 // 1. prompt the user.
 // 2. Ask user for a trait. (weight, height, eye color)
@@ -225,6 +225,13 @@ function searchByOccupation(people) {
 // 5. return people matching user's input (weight:130lbs, height:75in);
 // 6. repeat step 2,3,4,5 until only one match appears
 // 7. return matching person
+
+// Pair programming effort by Codie Fadness and Brian King. User story 2
+
+// 1. If initial search finds multiple people, save those results
+// 2. reprompt search by trait function, and get user input
+// 3. save results from step 2
+// 4. reprompt until five traits have been searched for, or only a single match is found
 
 //TODO: add other trait filter functions here.
 
