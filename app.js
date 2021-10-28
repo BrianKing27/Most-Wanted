@@ -74,8 +74,11 @@ function mainMenu(person, people) {
 //#region
 
 //nearly finished function used to search through an array of people to find matching first and last name and return a SINGLE person object.
+
+// The below searchBy functions were a pair programming effort by Codie Fadness and Brian King
+
 function searchByName(people) {
-  let firstName = promptFor("What is the person's eye color?", autoValid);
+  let firstName = promptFor("What is the person's first name?", autoValid);
   let lastName = promptFor("What is the person's last name?", autoValid);
 
   let foundPerson = people.filter(function (potentialMatch) {
@@ -90,6 +93,90 @@ function searchByName(people) {
   });
   // TODO: find the person single person object using the name they entered.
   return foundPerson;
+}
+
+function searchByEyeColor(people) {
+  let eyeColor = promptFor("What is the person's eye color?", autoValid);
+
+  let foundPerson = people.filter(function (potentialMatch) {
+    if(
+      potentialMatch.eyeColor === eyeColor
+    ) {                   
+      return true;
+    } else {
+      return false;
+    }
+  });
+}
+
+function searchByGender(people) {
+  let gender = promptFor("What is the person's gender?", autoValid);
+
+  let foundPerson = people.filter(function (potentialMatch) {
+    if(
+      potentialMatch.gender === gender
+    ) {                   
+      return true;
+    } else {
+      return false;
+    }
+  });
+}
+
+function searchByDOB(people) {
+  let dob = promptFor("What is the person's date of birth M/DD/YYYY?", autoValid);
+
+  let foundPerson = people.filter(function (potentialMatch) {
+    if(
+      potentialMatch.dob === dob
+    ) {                   
+      return true;
+    } else {
+      return false;
+    }
+  });
+}
+
+function searchByHeight(people) {
+  let height = promptFor("What is the person's height in inches?", autoValid);
+
+  let foundPerson = people.filter(function (potentialMatch) {
+    if(
+      potentialMatch.height === height
+    ) {                   
+      return true;
+    } else {
+      return false;
+    }
+  });
+}
+
+function searchByWeight(people) {
+  let weight = promptFor("What is the person's weight in pounds?", autoValid);
+
+  let foundPerson = people.filter(function (potentialMatch) {
+    if(
+      potentialMatch.weight === weight
+    ) {                   
+      return true;
+    } else {
+      return false;
+    }
+  });
+}
+
+function searchByOccupation(people) {
+  let occupation = promptFor("What is the person's occupation?", autoValid);
+
+  let foundPerson = people.filter(function (potentialMatch) {
+    if(
+      potentialMatch.occupation === occupation
+    ) {                   
+      return true;
+    } else {
+      return false;
+    }
+  });
 }
 
 //unfinished function to search through an array of people to find matching eye colors. Use searchByName as reference.
