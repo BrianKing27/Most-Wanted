@@ -18,7 +18,7 @@ function app(people) {
       searchResults = searchByName(people);
       break;
     case "no":
-      searchResults = traitsApp(people);
+      traitsApp(people);
       break;
     default:
       app(people); // restart app
@@ -93,7 +93,7 @@ function mainMenu(person, people) {
       // TODO: get person's family
       break;
     case "descendants":
-      searchChildren(searchResults[0], data);
+      searchByParents(searchResults[0], data);
       break;
     case "restart":
       app(people); // restart
@@ -224,32 +224,52 @@ function searchByOccupation(people) {
   });
   return foundPerson;
 }
+let child ='';
+let children = '';
+let descendants = '';
+let grandChildren = '';
+let grandChild = '';
+function searchByParents(person, people) {
 
-let children
-let child=""
-// this function was a paired programming effort by codie fadness and brian king
-function searchChildren(person, people) { //'person' will be searchResults[0]
-  
   let arrayOfChildren = people.filter(function (potentialMatch) {
-    for(let i=0; i<potentialMatch.parents.length; i++){
-      if(potentialMatch.parents[i] == person.id){                   
-        return true;
-      }
-      else{
-        return false;
-      }
-  }
-});
+    for(let i = 0; i < potentialMatch.parents.length; i++)
+    if(potentialMatch.parents[i] == person.id){               
+      return true;
+    }   
+    else {
+      return false;
+    }
+
+  });
   for(let i = 0; i < arrayOfChildren.length; i++){
-    child += 'First name: ' + arrayOfChildren[i].firstName + "\n"
-    child += 'Last name: ' + arrayOfChildren[i].lastName + "\n";
+    child +=  'Child of ' + person.firstName + ' ' + person.lastName + '\n';
+    child += '-----------------------' + '\n';
+    child += 'First name: ' + arrayOfChildren[i].firstName + ' ' + '\n';
+    child += 'Last name: ' + arrayOfChildren[i].lastName + '\n';
     child += '\n'
+    descendants = arrayOfChildren[i];
     children = child;
   }
-  alert(children);
+  alert(children)
+
+  grandChildren = prompt('Do you want to check their children? Type no, end or stop to close the program');
+  searchGrandchildren()
+  function searchGrandchildren(){
+    if(grandChildren == 'yes'){
+      searchByParents(descendants, data)
+    }
+    else if(grandChildren = 'end' || 'End' || 'stop' || 'Stop' || 'no' || 'No') {
+      return
+    }
+  }
 }
-
-
+//(potentialMatch.parents[i] == person.id){               
+//  return true;
+//}   
+//else {
+//  return false;
+//}
+//  potentialMatch.parents[i] == person.id || potentialMatch.parents[i] == person.parents || potentialMatch.id[i] == person.parents[i]
 
 
 
@@ -327,9 +347,12 @@ function displayPerson(person) {
   personInfo += "Height: " + person.height + "\n";
   personInfo += "Weight: " + person.weight + "\n";
   personInfo += "Occupation: " + person.occupation + "\n";
+  personInfo += "Parents: " + person.parents + "\n";
 
   alert(personInfo);
 }
+
+
 
 
 //#endregion
