@@ -93,7 +93,7 @@ function mainMenu(person, people) {
       // TODO: get person's family
       break;
     case "descendants":
-      // TODO: get person's descendants
+      searchChildren(people);
       break;
     case "restart":
       app(people); // restart
@@ -225,25 +225,32 @@ function searchByOccupation(people) {
   return foundPerson;
 }
 
-function searchChildren(people) {
 
+let child;
+// this function was a paired programming effort by codie fadness and brian king
+function searchChildren(people) {
+  
   let foundPeople = people.filter(function (potentialMatch) {
     if(
-      potentialMatch.parents === searchResults.id
+      potentialMatch.parents === searchResults[0].id
     ) {                   
       return true;
     } else {
       return false;
     }
   });
-  return foundPeople;
-  function displayChildren(children){
-    for
-    let namesOfChildren = foundPeople[0].firstName
-    namesOfChildren += foundPeople.lastName
-  }
 
+  for(let i = 0; i < foundPeople.length; i++){
+    child += 'First name: ' + foundPeople[i].firstName + " "
+    child += 'Last name: ' + foundPeople[i].lastName;
+      let children = child + '\n';
+      console.log(children);
+  }
 }
+
+
+
+
 
 //unfinished function to search through an array of people to find matching eye colors. Use searchByName as reference.
 
