@@ -18,7 +18,7 @@ function app(people) {
       searchResults = searchByName(people);
       break;
     case "no":
-      traitsApp(people);
+      searchResults = traitsApp(people);
       break;
     default:
       app(people); // restart app
@@ -93,7 +93,7 @@ function mainMenu(person, people) {
       // TODO: get person's family
       break;
     case "descendants":
-      searchChildren(people);
+      searchChildren(searchResults[0], data);
       break;
     case "restart":
       app(people); // restart
@@ -225,27 +225,28 @@ function searchByOccupation(people) {
   return foundPerson;
 }
 
-
-let child;
+let children
+let child=""
 // this function was a paired programming effort by codie fadness and brian king
-function searchChildren(people) {
+function searchChildren(person, people) { //'person' will be searchResults[0]
   
-  let foundPeople = people.filter(function (potentialMatch) {
-    if(
-      potentialMatch.parents === searchResults[0].id
-    ) {                   
-      return true;
-    } else {
-      return false;
-    }
-  });
-
-  for(let i = 0; i < foundPeople.length; i++){
-    child += 'First name: ' + foundPeople[i].firstName + " "
-    child += 'Last name: ' + foundPeople[i].lastName;
-      let children = child + '\n';
-      console.log(children);
+  let arrayOfChildren = people.filter(function (potentialMatch) {
+    for(let i=0; i<potentialMatch.parents.length; i++){
+      if(potentialMatch.parents[i] == person.id){                   
+        return true;
+      }
+      else{
+        return false;
+      }
   }
+});
+  for(let i = 0; i < arrayOfChildren.length; i++){
+    child += 'First name: ' + arrayOfChildren[i].firstName + "\n"
+    child += 'Last name: ' + arrayOfChildren[i].lastName + "\n";
+    child += '\n'
+    children = child;
+  }
+  alert(children);
 }
 
 
