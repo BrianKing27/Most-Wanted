@@ -225,6 +225,26 @@ function searchByOccupation(people) {
   return foundPerson;
 }
 
+function searchChildren(people) {
+
+  let foundPeople = people.filter(function (potentialMatch) {
+    if(
+      potentialMatch.parents === searchResults.id
+    ) {                   
+      return true;
+    } else {
+      return false;
+    }
+  });
+  return foundPeople;
+  function displayChildren(children){
+    for
+    let namesOfChildren = foundPeople[0].firstName
+    namesOfChildren += foundPeople.lastName
+  }
+
+}
+
 //unfinished function to search through an array of people to find matching eye colors. Use searchByName as reference.
 
 
@@ -245,12 +265,27 @@ function searchByOccupation(people) {
 // 3. save results from step 2
 // 4. reprompt until five traits have been searched for, or only a single match is found
 
+// Pair programming effort by Codie Fadness and Brian King. User story 3
+
 // 1. Save matched person/object.
 // 2. Prompt user.
 // 3. Ask what would they like to view.
 // 4. If info: Retrieve matched person.
 // 5. Display person's info
 // 6. if anything else: Close prompt.
+
+// Pair programming effort by Codie Fadness and Brian King. User story 4
+
+// 1. Save matched person/object.
+// 2. Prompt user
+// 3. Ask  what they would like to view.
+// 4. If descendants: Retrieve children
+//    a. Return objects with matching parents/ ID keyword pairs.
+// 5. Display names of children
+//    a. Display the first and last names of objects that have parents keyword equal to the matched object's ID keyword.
+// 6. if anything else: Close prompt.
+
+
 
 
 //TODO: add other trait filter functions here.
@@ -287,6 +322,8 @@ function displayPerson(person) {
 
   alert(personInfo);
 }
+
+
 //#endregion
 
 //Validation functions.
