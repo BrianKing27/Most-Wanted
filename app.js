@@ -90,7 +90,7 @@ function mainMenu(person, people) {
       displayPerson(searchResults[0])
       break;
     case "family":
-      // TODO: get person's family
+      searchByFamily(searchResults[0], data)
       break;
     case "descendants":
       searchByParents(searchResults[0], data);
@@ -263,18 +263,49 @@ function searchByParents(person, people) {
     }
   }
 }
-//(potentialMatch.parents[i] == person.id){               
-//  return true;
-//}   
-//else {
-//  return false;
-//}
-//  potentialMatch.parents[i] == person.id || potentialMatch.parents[i] == person.parents || potentialMatch.id[i] == person.parents[i]
+let nobody = ''
+let parent ='';
+let sibling = '';
+let spouse = '';
+
+function searchByFamily(person, people) {
+
+  let arrayOfFamily = people.filter(function (potentialMatch) {
+    for(let i = 0; i < 2; i++){
+    if(potentialMatch.id == person.parents[i] || potentialMatch.parents[i] == person.parents[i] || potentialMatch.id == person.currentSpouse){               
+      return true;
+    }   
+    else {
+      return false;
+    }
+
+    }
+  })  
+    for(let i = 0; i < arrayOfFamily.length; i++){
+      if(arrayOfFamily[i].id == person.parents[0] || arrayOfFamily[i].id == person.parents[1]){
+        parent += arrayOfFamily[i].firstName + ' ' + arrayOfFamily[i].lastName + '\n';
+      }
+      else if(arrayOfFamily[i].id == person.currentSpouse){
+        spouse += arrayOfFamily[i].firstName + ' ' + arrayOfFamily[i].lastName + '\n'
+      }
+      else if(arrayOfFamily[i].id == person.id){
+        nobody += " "
+      }
+      else if(arrayOfFamily[i].parents[i] == person.parents[0] || arrayOfFamily[i].parents[i] == person.parents[1]){
+        sibling += arrayOfFamily[i].firstName + ' ' + arrayOfFamily[i].lastName + '\n'
+      }
+    }
+    alert(`Parent(s): ${parent}
+          Spouse: ${spouse}
+          Sibling(s): ${sibling}`)  
+}
 
 
 
-//unfinished function to search through an array of people to find matching eye colors. Use searchByName as reference.
 
+// 1. Parents: if objectOne.parents == objectTwo.id then objectTwo is objectOne's parent.
+//    Siblings: if objectOne.parents == objectTwo.parents then objectOne and ObjectTwo are siblings.
+//    Spouse: if objectOne.currentSpouse == objectTwo.id then objectOne and ObjectTwo are spouses.
 
 // Pair programming effort by Codie Fadness and Brian King. User story 1
 
@@ -313,6 +344,14 @@ function searchByParents(person, people) {
 //    a. Display the first and last names of objects that have parents keyword equal to the matched object's ID keyword.
 // 6. if anything else: Close prompt.
 
+// Pair programming effort by Codie Fadness and Brian King. User story 5
+
+// 1. Save matched person/object.
+// 2. Prompt user
+// 3. Ask what they would like to view.
+// 4. If family: retrieve all family members
+// 5. Display names of family members and their relation
+// 6. if anything else: Close prompt.
 
 
 
