@@ -251,18 +251,33 @@ function searchByParents(person, people) {
     children = child;
   }
   alert(children)
+  searchGrandchildren();
 
-  grandChildren = prompt('Do you want to check their children? Type no, end or stop to close the program');
-  searchGrandchildren()
   function searchGrandchildren(){
-    if(grandChildren == 'yes'){
-      searchByParents(descendants, data)
-    }
-    else if(grandChildren = 'end' || 'End' || 'stop' || 'Stop' || 'no' || 'No') {
-      return
+    switch(grandChildren) {
+      case 'yes' :
+        searchByParents(descendants, data)
+        break;
+      case 'Yes' :
+        searchByParents(descendants, data)
+        break;
+      case 'end' || 'End' || 'stop' || 'Stop' || 'no' || 'No' :
+        return  
+      case 'reset' || 'restart' || 'Reset' || 'Restart' :
+        child =[];
+        children = [];
+        descendants = [];
+        grandChildren = [];
+        app(people);
+        break;
     }
   }
+  child =[];
+  children = [];
+  descendants = [];
+  grandChildren = [];
 }
+
 let nobody = ''
 let parent ='';
 let sibling = '';
