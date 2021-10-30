@@ -9,6 +9,7 @@
 
 let searchResults = [];
 function app(people) {
+  searchResults = [];
   let searchType = promptFor(
     "Do you know the name of the person you are looking for? Enter 'yes' or 'no'",
     yesNo
@@ -90,7 +91,9 @@ function mainMenu(person, people) {
       displayPerson(searchResults[0])
       break;
     case "family":
-      searchByFamily(searchResults[0], data)
+      searchBySpouse(searchResults[0], data);
+      searchBySiblings(searchResults[0], data);
+      searchByParents(searchResults[0], data);
       break;
     case "descendants":
       searchByParents(searchResults[0], data);
@@ -277,50 +280,101 @@ function searchByParents(person, people) {
   descendants = [];
   grandChildren = [];
 }
+ let spouse = [];
+ let theSpouse = [];
+ let sibling =[];
+ let siblings =[];
 
-let nobody = ''
-let parent ='';
-let sibling = '';
-let spouse = '';
 
-function searchByFamily(person, people) {
+ function searchBySiblings(person, people){
+   let arrayOfSiblings = people.filter(function (potentialMatch) {
+     if((potentialMatch.parents[0] == person.parents[0] || potentialMatch.parents[1] == person.parents[1]) && potentialMatch !== person && potentialMatch.parents.length > 0 && person.parents.length > 0){               
+       return true;
+     }   
+     else {
+       return false;
+     }
+   });
+    for(let i = 0; i < arrayOfSiblings.length; i++){
+     sibling +=  'Sibling of ' + person.firstName + ' ' + person.lastName + '\n';
+     sibling += '-----------------------' + '\n';
+     sibling += 'First name: ' + arrayOfSiblings[i].firstName + ' ' + '\n';
+     sibling += 'Last name: ' + arrayOfSiblings[i].lastName + '\n';
+     sibling += '\n'
 
-  let arrayOfFamily = people.filter(function (potentialMatch) {
-    for(let i = 0; i < 2; i++){
-    if(potentialMatch.id == person.parents[i] || potentialMatch.parents[i] == person.parents[i] || potentialMatch.id == person.currentSpouse){               
-      return true;
-    }   
-    else {
-      return false;
-    }
+     siblings = sibling;
+  }
+  alert(siblings);
+  sibling = [];
+  siblings = [];
+ }
 
-    }
-  })  
-    for(let i = 0; i < arrayOfFamily.length; i++){
-      if(arrayOfFamily[i].id == person.parents[0] || arrayOfFamily[i].id == person.parents[1]){
-        parent += arrayOfFamily[i].firstName + ' ' + arrayOfFamily[i].lastName + '\n';
-      }
-      else if(arrayOfFamily[i].id == person.currentSpouse){
-        spouse += arrayOfFamily[i].firstName + ' ' + arrayOfFamily[i].lastName + '\n'
-      }
-      else if(arrayOfFamily[i].id == person.id){
-        nobody += " "
-      }
-      else if(arrayOfFamily[i].parents[i] == person.parents[0] || arrayOfFamily[i].parents[i] == person.parents[1]){
-        sibling += arrayOfFamily[i].firstName + ' ' + arrayOfFamily[i].lastName + '\n'
-      }
-    }
-    alert(`Parent(s): ${parent}
-          Spouse: ${spouse}
-          Sibling(s): ${sibling}`)  
+
+function searchBySpouse(person, people){
+   let spouseName = people.filter(function (potentialMatch) {
+     if((potentialMatch.currentSpouse == person.id)){               
+       return true;
+     }   
+     else {
+       return false;
+     }
+   });
+     for(let i = 0; i < spouseName.length; i++){
+       spouse =  'Spouse of ' + person.firstName + ' ' + person.lastName + '\n';
+       spouse += '-----------------------' + '\n';
+       spouse += 'First name: ' + spouseName[i].firstName + ' ' + '\n';
+       spouse += 'Last name: ' + spouseName[i].lastName + '\n';
+       spouse += '\n';
+       theSpouse = spouse;
+ 
+     }
+     alert(theSpouse);
+     spouse = [];
+     theSpouse = [];
+
 }
 
+// let nobody = ''
+// let parent ='';
+// let sibling = '';
+// let spouse = '';
+
+// function searchByFamily(person, people) {
+
+//   let arrayOfFamily = people.filter(function (potentialMatch) {
+//     for(let i = 0; i < 2; i++){
+//     if(potentialMatch.id == person.parents[i] || potentialMatch.parents[i] == person.parents[i] || potentialMatch.id == person.currentSpouse){               
+//       return true;
+//     }   
+//     else {
+//       return false;
+//     }
+
+//     }
+//   })  
+//     for(let i = 0; i < arrayOfFamily.length; i++){
+//       if(arrayOfFamily[i].id == person.parents[0] || arrayOfFamily[i].id == person.parents[1]){
+//         parent += arrayOfFamily[i].firstName + ' ' + arrayOfFamily[i].lastName + '\n';
+//       }
+//       else if(arrayOfFamily[i].id == person.currentSpouse){
+//         spouse += arrayOfFamily[i].firstName + ' ' + arrayOfFamily[i].lastName + '\n'
+//       }
+//       else if(arrayOfFamily[i].id == person.id){
+//         nobody += " "
+//       }
+//       else if(arrayOfFamily[i].parents[i] == person.parents[0] || arrayOfFamily[i].parents[i] == person.parents[1]){
+//         sibling += arrayOfFamily[i].firstName + ' ' + arrayOfFamily[i].lastName + '\n'
+//       }
+//     }
+//     alert(`Parent(s): ${parent}
+//           Spouse: ${spouse}
+//           Sibling(s): ${sibling}`)  
+// }
 
 
 
-// 1. Parents: if objectOne.parents == objectTwo.id then objectTwo is objectOne's parent.
-//    Siblings: if objectOne.parents == objectTwo.parents then objectOne and ObjectTwo are siblings.
-//    Spouse: if objectOne.currentSpouse == objectTwo.id then objectOne and ObjectTwo are spouses.
+
+
 
 // Pair programming effort by Codie Fadness and Brian King. User story 1
 
