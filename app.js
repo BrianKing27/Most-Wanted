@@ -505,3 +505,65 @@ function customValidation(input) {}
 
 //#endregion
 
+
+let parentSearch
+let spouseSearch
+let siblingSearch
+let parents = ""
+let siblings = ""
+let spouse = ""
+
+
+function searchByParent(person, people){
+  parentSearch = people.filter(function (potentialMatch){
+    if(potentialMatch.id == person.parents[0] || potentialMatch.id == person.parents[1]){
+      return true
+    }
+    else{
+      return false
+    }
+  })
+  for(let i = 0; i < parentSearch.length; i++){
+    parents += parentSearch[i].firstName + " " + parentSearch[i].lastName + "\n"
+  }
+}
+
+function searchBySpouse(person, people){
+  spouseSearch = people.filter(function(potentialMatch){
+    if(potentialMatch.id == person.currentSpouse){
+      return true
+    }
+    else{
+      return false
+    }
+  })
+  for(let i = 0; i < spouseSearch.length; i++){
+    spouse += spouseSearch[i].firstName + " " + spouseSearch[i].lastName + "\n"
+  }
+}
+
+function searchBySibling(person, people){
+  siblingSearch = people.filter(function(potentialMatch){
+    for(let i=0; i<potentialMatch.parents.length; i++){
+    if((potentialMatch.parents[i] == person.parents[0] || potentialMatch.parents[i] == person.parents[1]) && potentialMatch.id != person.id){
+      return true
+    }
+    else{
+      return false
+    }
+    }
+  })
+  for(let i = 0; i < siblingSearch.length; i++){
+    siblings += siblingSearch[i].firstName + " " + siblingSearch[i].lastName + "\n"
+  }
+}
+
+
+function showFamily(person, people){
+  searchByParent(person, people)
+  searchBySpouse(person, people)
+  searchBySibling(person, people)
+  alert(`Parents: ${parents}
+Spouse: ${spouse}
+Siblings: ${siblings}`)
+}
