@@ -93,10 +93,11 @@ function mainMenu(person, people) {
     case "family":
       searchBySpouse(searchResults[0], data);
       searchBySiblings(searchResults[0], data);
-      searchByParents(searchResults[0], data);
+      searchByParent(searchResults[0], data);
+      searchFamily();
       break;
     case "descendants":
-      searchByParents(searchResults[0], data);
+      searchByChild(searchResults[0], data);
       break;
     case "restart":
       app(people); // restart
@@ -120,6 +121,11 @@ function mainMenu(person, people) {
 // The below searchBy functions were a pair programming effort by Codie Fadness and Brian King
 
 
+// Search by name function.
+//-----------------------------------------------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------------------------------------------------
+
 
 function searchByName(people) {
   let firstName = promptFor("What is the person's first name?", autoValid);
@@ -138,6 +144,13 @@ function searchByName(people) {
   // TODO: find the person single person object using the name they entered.
   return foundPerson;
 }
+
+
+// Search by Traits functions.
+//-----------------------------------------------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------------------------------------------------
+
 
 function searchByEyeColor(people) {
   let eyeColor = promptFor("What is the person's eye color?", autoValid);
@@ -227,13 +240,176 @@ function searchByOccupation(people) {
   });
   return foundPerson;
 }
+
+
+// Search by family and search by descendants function. This was a pair programming effort by Brian King and Codie Fadness.
+//-----------------------------------------------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+let parents =[];
+function searchByParent(person, people){
+  parents = [];
+  let parentSearch = people.filter(function (potentialMatch){
+    if(potentialMatch.id == person.parents[0] || potentialMatch.id == person.parents[1]){
+      return true
+    }
+    else{
+      return false
+    }
+  })
+  for(let i = 0; i < parentSearch.length; i++){
+      parents = person.firstName + " " + person.lastName + " " + "is the child of ";
+      parents += parentSearch[i].firstName + " " + parentSearch[i].lastName + "\n";
+      if(person.parents[1] != undefined){
+        person += " and " + parentSearch[1].firstName + " " + parentSearch[1].lastName;
+      }
+
+  }
+  alert(parents);
+}
+
+
+//-----------------------------------------------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+let sibling =[];
+let siblings =[];
+
+
+function searchBySiblings(person, people){
+  siblings = [];
+  let arrayOfSiblings = people.filter(function (potentialMatch) {
+    if((potentialMatch.parents[0] == person.parents[0] || potentialMatch.parents[1] == person.parents[1]) && potentialMatch !== person && potentialMatch.parents.length > 0 && person.parents.length > 0){               
+      return true;
+    }   
+    else {
+      return false;
+    }
+  });
+   for(let i = 0; i < arrayOfSiblings.length; i++){
+    sibling +=  'Sibling of ' + person.firstName + ' ' + person.lastName + '\n';
+    sibling += '-----------------------' + '\n';
+    sibling += 'First name: ' + arrayOfSiblings[i].firstName + ' ' + '\n';
+    sibling += 'Last name: ' + arrayOfSiblings[i].lastName + '\n';
+    sibling += '\n'
+
+    siblings = sibling;
+ }
+ alert(siblings);
+
+}
+
+
+//-----------------------------------------------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+let spouse = [];
+let theSpouse = [];
+function searchBySpouse(person, people){
+  theSpouse =[];
+  let spouseName = people.filter(function (potentialMatch) {
+    if((potentialMatch.currentSpouse == person.id)){               
+      return true;
+    }   
+    else {
+      return false;
+    }
+  });
+    for(let i = 0; i < spouseName.length; i++){
+      spouse =  'Spouse of ' + person.firstName + ' ' + person.lastName + '\n';
+      spouse += '-----------------------' + '\n';
+      spouse += 'First name: ' + spouseName[i].firstName + ' ' + '\n';
+      spouse += 'Last name: ' + spouseName[i].lastName + '\n';
+      spouse += '\n';
+      theSpouse = spouse;
+
+    }
+    alert(theSpouse);
+
+
+}
+
+
+//-----------------------------------------------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+let familyMembers = [];
+function searchFamily(){
+    familyMembers = prompt("Would you like to view the parents, spouse or siblings again? If yes type the category. If you would like to restart or quit the app type restart/reset or stop/quit")
+  switch(familyMembers) {
+    case 'parents' || 'Parents' :
+      alert(parents);
+      sibling =[];
+      siblings = [];
+      parent = [];
+      parents = [];
+      spouse = [];
+      theSpouse = [];
+      return
+    case 'spouse' || 'Spouse' :
+      alert(theSpouse);
+      sibling =[];
+      siblings = [];
+      parent = [];
+      parents = [];
+      spouse = [];
+      theSpouse = [];
+      return
+    case 'sibling' || 'Sibling' || 'siblings' || 'Siblings':
+      alert(siblings)
+      return;
+    case 'reset' || 'restart' || 'Reset' || 'Restart' :
+      sibling =[];
+      siblings = [];
+      parent = [];
+      parents = [];
+      spouse = [];
+      theSpouse = [];
+      app(data);
+      break;
+    case 'quit' || 'Quit' || 'stop' || 'Stop' || 'end' || 'End' :
+      sibling =[];
+      siblings = [];
+      parent = [];
+      parents = [];
+      spouse = [];
+      theSpouse = [];
+      return
+    default :
+      sibling =[];
+      siblings = [];
+      parent = [];
+      parents = [];
+      spouse = [];
+      theSpouse = [];
+      return;
+  }
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+
 let child ='';
 let children = '';
 let descendants = '';
 let grandChildren = '';
 let grandChild = '';
-function searchByParents(person, people) {
-
+function searchByChild(person, people) {
+  child =[];
+  children = [];
+  descendants = [];
+  grandChildren = [];
+  grandChild = [];
   let arrayOfChildren = people.filter(function (potentialMatch) {
     for(let i = 0; i < potentialMatch.parents.length; i++)
     if(potentialMatch.parents[i] == person.id){               
@@ -254,85 +430,39 @@ function searchByParents(person, people) {
     children = child;
   }
   alert(children)
+  grandChildren = prompt("yes emd reset")
   searchGrandchildren();
 
   function searchGrandchildren(){
+    
     switch(grandChildren) {
-      case 'yes' :
-        searchByParents(descendants, data)
-        break;
-      case 'Yes' :
-        searchByParents(descendants, data)
-        break;
-      case 'end' || 'End' || 'stop' || 'Stop' || 'no' || 'No' :
-        return  
-      case 'reset' || 'restart' || 'Reset' || 'Restart' :
-        child =[];
-        children = [];
-        descendants = [];
-        grandChildren = [];
-        app(people);
-        break;
-    }
+    case 'yes' :
+      return searchByChild(descendants, data)
+    case 'Yes' :
+      searchByChild(descendants, data)
+      break;
+    case 'end' || 'End' || 'stop' || 'Stop' || 'no' || 'No' :
+      return  
+    case 'reset' || 'restart' || 'Reset' || 'Restart' :
+      child =[];
+      children = [];
+      descendants = [];
+      grandChildren = [];
+      app(people);
+      break;
   }
+}
   child =[];
   children = [];
   descendants = [];
   grandChildren = [];
 }
- let spouse = [];
- let theSpouse = [];
- let sibling =[];
- let siblings =[];
 
 
- function searchBySiblings(person, people){
-   let arrayOfSiblings = people.filter(function (potentialMatch) {
-     if((potentialMatch.parents[0] == person.parents[0] || potentialMatch.parents[1] == person.parents[1]) && potentialMatch !== person && potentialMatch.parents.length > 0 && person.parents.length > 0){               
-       return true;
-     }   
-     else {
-       return false;
-     }
-   });
-    for(let i = 0; i < arrayOfSiblings.length; i++){
-     sibling +=  'Sibling of ' + person.firstName + ' ' + person.lastName + '\n';
-     sibling += '-----------------------' + '\n';
-     sibling += 'First name: ' + arrayOfSiblings[i].firstName + ' ' + '\n';
-     sibling += 'Last name: ' + arrayOfSiblings[i].lastName + '\n';
-     sibling += '\n'
+//-----------------------------------------------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------------------------------------------------
 
-     siblings = sibling;
-  }
-  alert(siblings);
-  sibling = [];
-  siblings = [];
- }
-
-
-function searchBySpouse(person, people){
-   let spouseName = people.filter(function (potentialMatch) {
-     if((potentialMatch.currentSpouse == person.id)){               
-       return true;
-     }   
-     else {
-       return false;
-     }
-   });
-     for(let i = 0; i < spouseName.length; i++){
-       spouse =  'Spouse of ' + person.firstName + ' ' + person.lastName + '\n';
-       spouse += '-----------------------' + '\n';
-       spouse += 'First name: ' + spouseName[i].firstName + ' ' + '\n';
-       spouse += 'Last name: ' + spouseName[i].lastName + '\n';
-       spouse += '\n';
-       theSpouse = spouse;
- 
-     }
-     alert(theSpouse);
-     spouse = [];
-     theSpouse = [];
-
-}
 
 // let nobody = ''
 // let parent ='';
@@ -505,65 +635,3 @@ function customValidation(input) {}
 
 //#endregion
 
-
-let parentSearch
-let spouseSearch
-let siblingSearch
-let parents = ""
-let siblings = ""
-let spouse = ""
-
-
-function searchByParent(person, people){
-  parentSearch = people.filter(function (potentialMatch){
-    if(potentialMatch.id == person.parents[0] || potentialMatch.id == person.parents[1]){
-      return true
-    }
-    else{
-      return false
-    }
-  })
-  for(let i = 0; i < parentSearch.length; i++){
-    parents += parentSearch[i].firstName + " " + parentSearch[i].lastName + "\n"
-  }
-}
-
-function searchBySpouse(person, people){
-  spouseSearch = people.filter(function(potentialMatch){
-    if(potentialMatch.id == person.currentSpouse){
-      return true
-    }
-    else{
-      return false
-    }
-  })
-  for(let i = 0; i < spouseSearch.length; i++){
-    spouse += spouseSearch[i].firstName + " " + spouseSearch[i].lastName + "\n"
-  }
-}
-
-function searchBySibling(person, people){
-  siblingSearch = people.filter(function(potentialMatch){
-    for(let i=0; i<potentialMatch.parents.length; i++){
-    if((potentialMatch.parents[i] == person.parents[0] || potentialMatch.parents[i] == person.parents[1]) && potentialMatch.id != person.id){
-      return true
-    }
-    else{
-      return false
-    }
-    }
-  })
-  for(let i = 0; i < siblingSearch.length; i++){
-    siblings += siblingSearch[i].firstName + " " + siblingSearch[i].lastName + "\n"
-  }
-}
-
-
-function showFamily(person, people){
-  searchByParent(person, people)
-  searchBySpouse(person, people)
-  searchBySibling(person, people)
-  alert(`Parents: ${parents}
-Spouse: ${spouse}
-Siblings: ${siblings}`)
-}
